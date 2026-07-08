@@ -24,8 +24,9 @@ import {
 const HERO_IMAGE =
   'https://cdn.sceneai.art/Hero%20section%20image/aae9fa10-5214-46ed-b9ef-39f2bed11ac1.avif'
 
-const PORTRAIT_IMAGE =
-  'https://cdn.sceneai.art/Image%20for%20any%20section/221a4527-acd0-49cd-bdcf-71f2819ce5b0.jpg'
+const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`
+
+const PORTRAIT_IMAGE = assetPath('assets/portfolio/abel-aichrisz-avatar.webp')
 
 const CONTACT_EMAIL = 'hello@aichrisz.com'
 
@@ -91,8 +92,7 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     title: 'Captcha Hell',
-    image:
-      'https://cdn.sceneai.art/Image%20for%20any%20section/15e7a8dc-1a1e-4852-b773-0a301a2976b1.webp',
+    image: assetPath('assets/portfolio/captcha-hell.webp'),
     badges: ['Interactive Game', 'React'],
     description:
       'Satirical interactive web game about proving you are human.',
@@ -108,8 +108,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: 'The Website That Slowly Dies',
-    image:
-      'https://cdn.sceneai.art/Image%20for%20any%20section/c7148f9a-b581-448b-a302-20d534028374.webp',
+    image: assetPath('assets/portfolio/website-that-slowly-dies.webp'),
     badges: ['Web Toy', 'Concept'],
     description:
       'Experimental web experience where a clean site decays the longer you stay.',
@@ -125,8 +124,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: 'One Button Universe',
-    image:
-      'https://cdn.sceneai.art/Image%20for%20any%20section/b778c6ff-c598-49f1-9882-ce4ea3a6b729.webp',
+    image: assetPath('assets/portfolio/one-button-universe.webp'),
     badges: ['Web Toy', 'React'],
     description:
       'Minimal web toy where one button creates a universe.',
@@ -142,8 +140,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: 'Kairo / Kei OS',
-    image:
-      'https://cdn.sceneai.art/Image%20for%20any%20section/f23ea357-810b-4d57-8a6f-42e14ee5e32c.webp',
+    image: assetPath('assets/portfolio/kairo-kei-os.webp'),
     badges: ['Concept', 'Life OS'],
     description:
       'Personal companion and life-dashboard concept for calm daily structure.',

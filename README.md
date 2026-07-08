@@ -35,3 +35,4 @@ npm run lint
 - Tools & systems grid (2 rows × 6 columns)
 - Signature section with three minimal cards
 - Contact build-type selector updating the `mailto:hello@aichrisz.com` subject
+- Repo-local captured assets in `public/assets/portfolio/`: live project screenshots for Best Work cards and the `aichrisz.com` profile photo for Who I am
