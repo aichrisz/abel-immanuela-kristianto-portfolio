@@ -80,6 +80,7 @@ const COPY: Record<
 type Project = {
   title: string
   image: string
+  mobileImage: string
   badges: string[]
   description: string
   role: string
@@ -93,6 +94,7 @@ const PROJECTS: Project[] = [
   {
     title: 'Captcha Hell',
     image: assetPath('assets/portfolio/captcha-hell.webp'),
+    mobileImage: assetPath('assets/portfolio/captcha-hell-mobile.webp'),
     badges: ['Interactive Game', 'React'],
     description:
       'Satirical interactive web game about proving you are human.',
@@ -109,6 +111,7 @@ const PROJECTS: Project[] = [
   {
     title: 'The Website That Slowly Dies',
     image: assetPath('assets/portfolio/website-that-slowly-dies.webp'),
+    mobileImage: assetPath('assets/portfolio/website-that-slowly-dies-mobile.webp'),
     badges: ['Web Toy', 'Concept'],
     description:
       'Experimental web experience where a clean site decays the longer you stay.',
@@ -125,6 +128,7 @@ const PROJECTS: Project[] = [
   {
     title: 'One Button Universe',
     image: assetPath('assets/portfolio/one-button-universe.webp'),
+    mobileImage: assetPath('assets/portfolio/one-button-universe-mobile.webp'),
     badges: ['Web Toy', 'React'],
     description:
       'Minimal web toy where one button creates a universe.',
@@ -141,6 +145,7 @@ const PROJECTS: Project[] = [
   {
     title: 'Kairo / Kei OS',
     image: assetPath('assets/portfolio/kairo-kei-os.webp'),
+    mobileImage: assetPath('assets/portfolio/kairo-kei-os-mobile.webp'),
     badges: ['Concept', 'Life OS'],
     description:
       'Personal companion and life-dashboard concept for calm daily structure.',
@@ -275,7 +280,7 @@ function Navbar() {
   return (
     <nav className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between px-6 py-6 md:px-12">
       <a href="#home" className="text-xl font-bold tracking-wide text-white">
-        ABEL
+        aichrisz
       </a>
       <div className="hidden items-center gap-8 text-sm text-white md:flex">
         <a href="#home">Home</a>
@@ -555,13 +560,19 @@ function ProjectsSection({
             type="button"
             onClick={() => onOpenProject(project)}
             aria-label={`Open ${project.title} case study`}
-            className="relative block h-[800px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-left"
+            className="relative block h-[520px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-left sm:h-[640px] md:h-[800px]"
           >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+            <picture>
+              <source media="(max-width: 767px)" srcSet={project.mobileImage} />
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 767px) calc(100vw - 48px), min(100vw - 96px, 1440px)"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+              />
+            </picture>
             <div className="absolute left-6 top-6 flex gap-3">
               {project.badges.map((badge) => (
                 <span
@@ -599,7 +610,7 @@ function AboutSection({ lang }: { lang: Language }) {
           <img
             src={PORTRAIT_IMAGE}
             alt="Portrait of Abel Immanuela Kristianto"
-            className="h-auto w-full max-w-md rounded-2xl object-cover"
+            className="aspect-square h-auto w-full max-w-md rounded-2xl object-cover object-center sm:aspect-[4/5]"
           />
         </div>
         <div className="flex flex-col items-start justify-center gap-10">

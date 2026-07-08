@@ -36,3 +36,4 @@ npm run lint
 - Signature section with three minimal cards
 - Contact build-type selector updating the `mailto:hello@aichrisz.com` subject
 - Repo-local captured assets in `public/assets/portfolio/`: live project screenshots for Best Work cards and the `aichrisz.com` profile photo for Who I am
+- Mobile-friendly image layout: project cards use shorter mobile heights while keeping `800px` desktop cards; captured project screenshots ship as desktop and mobile WebP variants via `<picture>`

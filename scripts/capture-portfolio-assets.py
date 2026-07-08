@@ -18,7 +18,7 @@ PORTRAIT_URL = 'https://nxhpiqjxoftjiyfwimno.supabase.co/storage/v1/object/publi
 
 def crop_to_card(src: Path, dest: Path):
     im = Image.open(src).convert('RGB')
-    # Keep a wide 16:10-ish crop that works well with object-cover inside 800px cards.
+    # Wide desktop card asset.
     target_ratio = 16 / 10
     w, h = im.size
     current = w / h
@@ -31,6 +31,23 @@ def crop_to_card(src: Path, dest: Path):
         top = max(0, (h - new_h) // 3)
         box = (0, top, w, top + new_h)
     im.crop(box).resize((1600, 1000), Image.Resampling.LANCZOS).save(dest, 'WEBP', quality=88)
+
+
+def crop_to_mobile_card(src: Path, dest: Path):
+    im = Image.open(src).convert('RGB')
+    # Portrait-ish mobile card asset, closer to the 320-390px card aspect.
+    target_ratio = 9 / 16
+    w, h = im.size
+    current = w / h
+    if current > target_ratio:
+        new_w = int(h * target_ratio)
+        left = (w - new_w) // 2
+        box = (left, 0, left + new_w, h)
+    else:
+        new_h = int(w / target_ratio)
+        top = max(0, (h - new_h) // 4)
+        box = (0, top, w, top + new_h)
+    im.crop(box).resize((900, 1600), Image.Resampling.LANCZOS).save(dest, 'WEBP', quality=88)
 
 
 def make_private_kairo_card(dest: Path):
@@ -81,27 +98,41 @@ def main():
     chromium = subprocess.check_output("command -v chromium || command -v chromium-browser || command -v google-chrome", shell=True, text=True).strip()
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, executable_path=chromium, args=['--no-sandbox'])
-        page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
+        desktop = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
+        mobile = browser.new_page(viewport={'width': 390, 'height': 760}, device_scale_factor=2, is_mobile=True)
+
+        def seed_universe(page):
+            for label in ['Start a new universe', 'Act on the universe']:
+                try:
+                    page.get_by_label(label).click(timeout=2500)
+                except Exception:
+                    pass
+            for _ in range(14):
+                page.mouse.click(195, 430)
+                page.wait_for_timeout(80)
+            page.wait_for_timeout(1200)
+
         for slug, url in PROJECTS:
-            page.goto(url, wait_until='networkidle', timeout=60000)
-            page.wait_for_timeout(1500)
+            desktop.goto(url, wait_until='networkidle', timeout=60000)
+            desktop.wait_for_timeout(1500)
             if slug == 'one-button-universe':
-                # Seed the universe so the screenshot shows the actual generated toy, not an empty canvas.
-                for label in ['Start a new universe', 'Act on the universe']:
-                    try:
-                        page.get_by_label(label).click(timeout=2500)
-                    except Exception:
-                        pass
-                for _ in range(14):
-                    page.mouse.click(720, 520)
-                    page.wait_for_timeout(80)
-                page.wait_for_timeout(1200)
+                seed_universe(desktop)
             raw = OUT / f'{slug}.png'
-            page.screenshot(path=str(raw), full_page=False)
+            desktop.screenshot(path=str(raw), full_page=False)
             crop_to_card(raw, OUT / f'{slug}.webp')
             raw.unlink(missing_ok=True)
+
+            mobile.goto(url, wait_until='networkidle', timeout=60000)
+            mobile.wait_for_timeout(1500)
+            if slug == 'one-button-universe':
+                seed_universe(mobile)
+            raw_mobile = OUT / f'{slug}-mobile.png'
+            mobile.screenshot(path=str(raw_mobile), full_page=False)
+            crop_to_mobile_card(raw_mobile, OUT / f'{slug}-mobile.webp')
+            raw_mobile.unlink(missing_ok=True)
         browser.close()
     make_private_kairo_card(OUT / 'kairo-kei-os.webp')
+    crop_to_mobile_card(OUT / 'kairo-kei-os.webp', OUT / 'kairo-kei-os-mobile.webp')
     portrait_raw = OUT / 'abel-aichrisz-avatar.png'
     urllib.request.urlretrieve(PORTRAIT_URL, portrait_raw)
     im = Image.open(portrait_raw).convert('RGB')
