@@ -1,5 +1,7 @@
 # Project Brief
 
+> V2 note: content (hero copy, stats, project names/badges, about text, tools grid, signature section, contact selector, language toggle EN/DE/ID, real links) now follows `docs/superpowers/specs/2026-07-08-abel-portfolio-v2-design.md`. All visual constraints below (colors, sizes, max-widths, no-effects rules) still apply.
+
 Create a modern, dark-themed, single-page portfolio website using React and Tailwind CSS. The design must be a strict 1:1 replication of the provided design reference. Do NOT add any extra forbidden lighting effects, pulse animations, unrequested colors, or stylistic embellishments. Keep it clean and minimal.
 Set the background to a solid dark color (#050505).
 Set the maximum width for all content sections (excluding the Hero and Footer) to exactly 1440px.
