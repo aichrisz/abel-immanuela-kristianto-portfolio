@@ -1,4 +1,4 @@
-# Suraj Kale Portfolio
+# Abel Immanuela Kristianto Portfolio
 
 A strict dark single-page React + Tailwind portfolio implementation based on the provided design brief.
 

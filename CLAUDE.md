@@ -14,7 +14,7 @@ Set the maximum width for all content sections (excluding the Hero and Footer) t
 2. Fixed Hero Section
 - The Hero section must stay completely fixed in the background while the rest of the page content slides smoothly over the top of it as the user scrolls down.
 - Background Image: Use exactly https://cdn.sceneai.art/Hero%20section%20image/aae9fa10-5214-46ed-b9ef-39f2bed11ac1.avif. Apply a subtle dark overlay so text is readable.
-- Navbar: transparent background. Left logo text "PASSION" bold. Center nav links Home, About, Projects, Contact me. Right "Book a call" button.
+- Navbar: transparent background. Left logo text "ABEL" bold. Center nav links Home, About, Projects, Contact me. Right "Book a call" button.
 - Hero bottom content: left heading "EXPERIENCED UI/UX DESIGNER PASSIONATE ABOUT USER NEEDS" with font-size exactly 42px and one small red dot at the end. Right "Contact me" button bottom right.
 
 3. Stats Section
@@ -46,7 +46,7 @@ Set the maximum width for all content sections (excluding the Hero and Footer) t
 
 8. Footer
 - Top row: left 3 outlined square icon buttons (Email, Sparkle/Dribbble, Twitter), center links Home, Work, About, right pill "Book a call" with diagonal top-right arrow.
-- Bottom: massive edge-to-edge white text "SURAJ KALE" using SVG viewBox so it scales from extreme left to extreme right without wrapping.
+- Bottom: massive edge-to-edge white text "ABEL IMMANUELA KRISTIANTO" using SVG viewBox so it scales from extreme left to extreme right without wrapping.
 
 ## Implementation notes
 - Use Tailwind CSS classes. Tailwind v3/PostCSS is installed.

@@ -137,7 +137,7 @@ function Navbar() {
   return (
     <nav className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between px-6 py-6 md:px-12">
       <a href="#home" className="text-xl font-bold tracking-wide text-white">
-        PASSION
+        ABEL
       </a>
       <div className="hidden items-center gap-8 text-sm text-white md:flex">
         <a href="#home">Home</a>
@@ -274,7 +274,7 @@ function AboutSection() {
         <div>
           <img
             src={PORTRAIT_IMAGE}
-            alt="Portrait of Suraj Kale"
+            alt="Portrait of Abel Immanuela Kristianto"
             className="h-auto w-full max-w-md rounded-2xl object-cover"
           />
         </div>
@@ -429,20 +429,20 @@ function Footer() {
         viewBox="0 0 1000 150"
         className="block w-full"
         role="img"
-        aria-label="SURAJ KALE"
+        aria-label="ABEL IMMANUELA KRISTIANTO"
       >
         <text
           x="500"
           y="120"
           textAnchor="middle"
           fill="#ffffff"
-          fontSize="150"
+          fontSize="112"
           fontWeight="700"
           fontFamily="Inter, system-ui, sans-serif"
           textLength="1000"
           lengthAdjust="spacingAndGlyphs"
         >
-          SURAJ KALE
+          ABEL IMMANUELA KRISTIANTO
         </text>
       </svg>
     </footer>
