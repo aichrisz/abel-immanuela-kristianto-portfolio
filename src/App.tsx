@@ -30,6 +30,24 @@ const PORTRAIT_IMAGE = assetPath('assets/portfolio/abel-aichrisz-avatar.webp')
 
 const CONTACT_EMAIL = 'hello@aichrisz.com'
 
+const buildInquiryMailto = (buildType: string) => {
+  const subject = `Portfolio inquiry: ${buildType}`
+  const body = [
+    'Hi Abel,',
+    '',
+    `I am interested in discussing: ${buildType}.`,
+    '',
+    'Project / company:',
+    'What I need:',
+    'Ideal timing:',
+    'Budget range (optional):',
+    '',
+    'Thanks,',
+  ].join('\n')
+
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
+
 type Language = 'en' | 'de' | 'id'
 
 const LANGUAGES: Language[] = ['en', 'de', 'id']
@@ -41,38 +59,46 @@ const COPY: Record<
     positioning: string
     availability: string
     about: string
-    cta: string
+    workCta: string
+    contactCta: string
+    inquiryCta: string
     buildQuestion: string
   }
 > = {
   en: {
-    heading: 'DESIGNER AND FRONTEND BUILDER CRAFTING CALM, USEFUL DIGITAL PRODUCTS',
+    heading: 'CALM INTERFACES. MEMORABLE INTERACTIVE WORK.',
     positioning:
-      'Designer and frontend builder crafting calm, useful digital products.',
+      'I shape calm interfaces, then build the memorable interactions that make the work stick.',
     availability: 'Available for freelance web projects',
     about:
       "I'm Abel Immanuela Kristianto, an Indonesian creative technologist based in Germany. I design and build clean digital experiences with a focus on clarity, usability, and emotional detail. My work sits between interface design, frontend prototypes, and small interactive products.",
-    cta: 'Book a call',
+    workCta: 'See selected work',
+    contactCta: 'Start a project',
+    inquiryCta: 'Start a project inquiry',
     buildQuestion: 'What do you want to build?',
   },
   de: {
-    heading: 'DESIGNER UND FRONTEND-ENTWICKLER FÜR RUHIGE, NÜTZLICHE DIGITALE PRODUKTE',
+    heading: 'RUHIGE INTERFACES. INTERAKTIVE ARBEIT, DIE IM GEDÄCHTNIS BLEIBT.',
     positioning:
-      'Designer und Frontend-Entwickler für ruhige, nützliche digitale Produkte.',
+      'Ich gestalte ruhige Interfaces und baue die interaktiven Details, die im Gedächtnis bleiben.',
     availability: 'Verfügbar für freie Webprojekte',
     about:
       'Ich bin Abel Immanuela Kristianto, ein indonesischer Creative Technologist in Deutschland. Ich gestalte und baue klare digitale Erlebnisse mit Fokus auf Klarheit, Usability und emotionale Details. Meine Arbeit liegt zwischen Interface-Design, Frontend-Prototypen und kleinen interaktiven Produkten.',
-    cta: 'Termin buchen',
+    workCta: 'Projekte ansehen',
+    contactCta: 'Projekt starten',
+    inquiryCta: 'Projekt anfragen',
     buildQuestion: 'Was willst du bauen?',
   },
   id: {
-    heading: 'DESAINER DAN FRONTEND BUILDER YANG MEMBUAT PRODUK DIGITAL YANG TENANG DAN BERGUNA',
+    heading: 'INTERFACE TENANG. KARYA INTERAKTIF YANG MEMBEKAS.',
     positioning:
-      'Desainer dan frontend builder yang bikin produk digital yang tenang dan berguna.',
+      'Aku merancang interface yang tenang lalu membangun interaksi yang bikin karyanya membekas.',
     availability: 'Terbuka untuk proyek web freelance',
     about:
       'Aku Abel Immanuela Kristianto, creative technologist asal Indonesia yang sekarang tinggal di Jerman. Aku mendesain dan membangun pengalaman digital yang bersih, dengan fokus pada kejelasan, kegunaan, dan detail emosional. Karyaku ada di antara desain interface, prototipe frontend, dan produk interaktif kecil.',
-    cta: 'Ngobrol yuk',
+    workCta: 'Lihat karya pilihan',
+    contactCta: 'Mulai proyek',
+    inquiryCta: 'Kirim detail proyek',
     buildQuestion: 'Mau bikin apa?',
   },
 }
@@ -81,11 +107,15 @@ type Project = {
   title: string
   image: string
   mobileImage: string
+  imageAlt: string
   badges: string[]
-  description: string
+  cardOutcome: string
+  summary: string
+  challenge: string
+  approach: string
+  outcome: string
   role: string
   stack: string
-  highlights: string[]
   liveUrl?: string
   repoUrl?: string
 }
@@ -95,16 +125,15 @@ const PROJECTS: Project[] = [
     title: 'Captcha Hell',
     image: assetPath('assets/portfolio/captcha-hell.webp'),
     mobileImage: assetPath('assets/portfolio/captcha-hell-mobile.webp'),
+    imageAlt: 'Screenshot of the Captcha Hell browser game',
     badges: ['Interactive Game', 'React'],
-    description:
-      'Satirical interactive web game about proving you are human.',
+    cardOutcome: 'Shipped as a playable browser game with escalating absurdity.',
+    summary: 'A satirical browser game about the familiar friction of proving you are human.',
+    challenge: 'CAPTCHA is universal friction, but the joke disappears if it only lands once.',
+    approach: 'Turn familiar verification patterns into increasingly unreasonable challenges while keeping every interaction legible.',
+    outcome: 'A deployed, replayable satire that shows interaction design, stateful frontend work, and a clear creative hook.',
     role: 'Concept, design, and frontend build',
     stack: 'React, TypeScript, Tailwind CSS, GitHub Pages',
-    highlights: [
-      'Escalating absurd captcha challenges with a strong comedic hook',
-      'Fully client-side game state, no backend required',
-      'Deployed and playable in the browser',
-    ],
     liveUrl: 'https://aichrisz.github.io/captcha-hell/',
     repoUrl: 'https://github.com/aichrisz/captcha-hell',
   },
@@ -112,16 +141,15 @@ const PROJECTS: Project[] = [
     title: 'The Website That Slowly Dies',
     image: assetPath('assets/portfolio/website-that-slowly-dies.webp'),
     mobileImage: assetPath('assets/portfolio/website-that-slowly-dies-mobile.webp'),
+    imageAlt: 'Screenshot of The Website That Slowly Dies experiment',
     badges: ['Web Toy', 'Concept'],
-    description:
-      'Experimental web experience where a clean site decays the longer you stay.',
+    cardOutcome: 'Shipped as a time-based experiment where the interface becomes the story.',
+    summary: 'An experimental website that visibly decays the longer a visitor stays.',
+    challenge: 'Most websites reward attention; this concept needed time on page to feel increasingly unsettling.',
+    approach: 'Begin with a composed interface, then use timed deterioration of layout, type, and color as the central mechanic.',
+    outcome: 'A deployed web experiment where the interface carries the narrative without a tutorial or backend.',
     role: 'Concept, design, and frontend build',
     stack: 'React, TypeScript, CSS effects, GitHub Pages',
-    highlights: [
-      'Time-driven decay system that degrades layout, type, and color',
-      'A calm interface that turns unsettling by design',
-      'Built as a small self-contained experiment',
-    ],
     liveUrl: 'https://aichrisz.github.io/website-that-slowly-dies/',
     repoUrl: 'https://github.com/aichrisz/website-that-slowly-dies',
   },
@@ -129,16 +157,15 @@ const PROJECTS: Project[] = [
     title: 'One Button Universe',
     image: assetPath('assets/portfolio/one-button-universe.webp'),
     mobileImage: assetPath('assets/portfolio/one-button-universe-mobile.webp'),
+    imageAlt: 'Screenshot of the One Button Universe generative web toy',
     badges: ['Web Toy', 'React'],
-    description:
-      'Minimal web toy where one button creates a universe.',
+    cardOutcome: 'Shipped as a one-control generative toy built for instant play.',
+    summary: 'A generative web toy that turns one control into an evolving universe.',
+    challenge: 'Generative tools can become control-heavy before the first satisfying moment.',
+    approach: 'Reduce the interaction to one input and let every press add visible, cumulative change to the canvas.',
+    outcome: 'A lightweight deployed toy that is immediately understandable, repeatable, and easy to share.',
     role: 'Concept, design, and frontend build',
     stack: 'React, TypeScript, Canvas, GitHub Pages',
-    highlights: [
-      'One-input interaction model with generative output',
-      'Minimal UI that keeps focus on the toy itself',
-      'Small, fast, and shareable',
-    ],
     liveUrl: 'https://aichrisz.github.io/one-button-universe/',
     repoUrl: 'https://github.com/aichrisz/one-button-universe',
   },
@@ -146,16 +173,15 @@ const PROJECTS: Project[] = [
     title: 'Kairo / Kei OS',
     image: assetPath('assets/portfolio/kairo-kei-os.webp'),
     mobileImage: assetPath('assets/portfolio/kairo-kei-os-mobile.webp'),
+    imageAlt: 'Redacted private concept preview for Kairo and Kei OS',
     badges: ['Concept', 'Life OS'],
-    description:
-      'Personal companion and life-dashboard concept for calm daily structure.',
+    cardOutcome: 'Framed a minimum-first system for calmer daily planning.',
+    summary: 'A private life-dashboard concept for calm, shift-aware daily structure.',
+    challenge: 'Daily planning systems can punish low-energy days with more friction and guilt.',
+    approach: 'Design around minimum-first actions, limited focus lanes, shift-aware structure, and calm language.',
+    outcome: 'A coherent private product direction that makes a personal operating-system concept tangible without exposing private data.',
     role: 'Product concept, system design, and prototyping',
     stack: 'React, TypeScript, design systems, AI-assisted workflows',
-    highlights: [
-      'Calm companion OS concept with a no-shame, minimum-first approach',
-      'Mobile-first, shift-aware daily structure',
-      'Private concept — no public repo or live link yet',
-    ],
   },
 ]
 
@@ -280,7 +306,7 @@ function Navbar() {
   return (
     <nav className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between px-6 py-6 md:px-12">
       <a href="#home" className="text-xl font-bold tracking-wide text-white">
-        aichrisz
+        ABEL
       </a>
       <div className="hidden items-center gap-8 text-sm text-white md:flex">
         <a href="#home">Home</a>
@@ -290,9 +316,9 @@ function Navbar() {
       </div>
       <a
         href="#contact"
-        className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black"
+        className="rounded-full border border-white/60 px-5 py-2.5 text-sm font-medium text-white"
       >
-        Book a call
+        Contact
       </a>
     </nav>
   )
@@ -360,12 +386,20 @@ function Hero({
           </h1>
           <p className="text-sm text-neutral-300">{copy.positioning}</p>
         </div>
-        <a
-          href="#contact"
-          className="shrink-0 rounded-full border border-white px-6 py-3 text-sm font-medium text-white"
-        >
-          Contact me
-        </a>
+        <div className="flex shrink-0 flex-wrap items-center gap-3">
+          <a
+            href="#projects"
+            className="rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
+          >
+            {copy.workCta}
+          </a>
+          <a
+            href="#contact"
+            className="rounded-full border border-white/60 px-6 py-3 text-sm font-medium text-white"
+          >
+            {copy.contactCta}
+          </a>
+        </div>
       </div>
     </section>
   )
@@ -380,13 +414,13 @@ function StatsSection() {
             Selected Work
           </span>
           <h2 className="text-5xl font-bold text-white md:text-6xl">
-            My best work
+            Selected work, built end to end.
           </h2>
           <a
             href="#projects"
             className="flex items-center gap-2 rounded-full bg-neutral-800 px-6 py-3 text-sm font-medium text-white"
           >
-            Check all projects -&gt;
+            Explore the projects
           </a>
         </div>
         <div className="flex flex-col gap-6 sm:flex-row">
@@ -394,15 +428,15 @@ function StatsSection() {
             className="flex h-56 w-full flex-col items-center justify-center bg-neutral-800 sm:w-64"
             style={cardChamfer}
           >
-            <span className="text-6xl font-bold text-white">10+</span>
-            <span className="mt-2 text-neutral-400">Web Builds</span>
+            <span className="text-6xl font-bold text-white">3</span>
+            <span className="mt-2 text-center text-neutral-400">Public interactive releases</span>
           </div>
           <div
             className="flex h-56 w-full flex-col items-center justify-center bg-neutral-800 sm:w-64"
             style={cardChamfer}
           >
-            <span className="text-4xl font-bold text-white">DE / EN / ID</span>
-            <span className="mt-2 text-neutral-400">Working Languages</span>
+            <span className="text-4xl font-bold text-white">End-to-end</span>
+            <span className="mt-2 text-center text-neutral-400">Interface concept to deployed frontend</span>
           </div>
         </div>
       </div>
@@ -471,7 +505,7 @@ function ProjectDrawer({
         role="dialog"
         aria-modal="true"
         aria-labelledby="case-study-title"
-        className="absolute bottom-0 right-0 top-0 flex w-full max-w-lg flex-col gap-8 overflow-y-auto border-l border-neutral-800 bg-[#0a0a0a] p-8 md:p-10"
+        className="absolute bottom-0 right-0 top-0 flex w-full max-w-xl flex-col gap-8 overflow-y-auto border-l border-neutral-800 bg-[#0a0a0a] p-8 md:p-10"
       >
         <div className="flex items-start justify-between gap-4">
           <h3
@@ -490,28 +524,34 @@ function ProjectDrawer({
             <X size={18} />
           </button>
         </div>
-        <p className="text-lg text-neutral-200">{project.description}</p>
-        <div>
-          <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
-            Role
-          </h4>
-          <p className="text-neutral-200">{project.role}</p>
+        <p className="text-lg leading-relaxed text-neutral-200">{project.summary}</p>
+        <div className="grid gap-5">
+          {[
+            ['Challenge', project.challenge],
+            ['Approach', project.approach],
+            ['Outcome', project.outcome],
+          ].map(([label, text]) => (
+            <div key={label}>
+              <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
+                {label}
+              </h4>
+              <p className="leading-relaxed text-neutral-200">{text}</p>
+            </div>
+          ))}
         </div>
-        <div>
-          <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
-            Stack
-          </h4>
-          <p className="text-neutral-200">{project.stack}</p>
-        </div>
-        <div>
-          <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
-            Highlights
-          </h4>
-          <ul className="flex list-disc flex-col gap-2 pl-5 text-neutral-200">
-            {project.highlights.map((highlight) => (
-              <li key={highlight}>{highlight}</li>
-            ))}
-          </ul>
+        <div className="grid gap-5 border-t border-neutral-800 pt-6 sm:grid-cols-2">
+          <div>
+            <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
+              Role
+            </h4>
+            <p className="text-neutral-200">{project.role}</p>
+          </div>
+          <div>
+            <h4 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
+              Stack
+            </h4>
+            <p className="text-neutral-200">{project.stack}</p>
+          </div>
         </div>
         <div className="mt-auto flex flex-wrap gap-4">
           {project.liveUrl && (
@@ -566,7 +606,7 @@ function ProjectsSection({
               <source media="(max-width: 767px)" srcSet={project.mobileImage} />
               <img
                 src={project.image}
-                alt={project.title}
+                alt={project.imageAlt}
                 loading="lazy"
                 decoding="async"
                 sizes="(max-width: 767px) calc(100vw - 48px), min(100vw - 96px, 1440px)"
@@ -583,9 +623,12 @@ function ProjectsSection({
                 </span>
               ))}
             </div>
-            <div className="absolute bottom-6 left-6 rounded-lg bg-neutral-900/90 px-6 py-4">
-              <span className="text-lg font-semibold text-white">
+            <div className="absolute bottom-6 left-6 right-6 max-w-2xl rounded-lg bg-neutral-950/90 px-5 py-4 sm:px-6">
+              <span className="block text-lg font-semibold text-white">
                 {project.title}
+              </span>
+              <span className="mt-1 block max-w-xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+                {project.cardOutcome}
               </span>
             </div>
           </button>
@@ -699,12 +742,10 @@ function FaqSection({ lang }: { lang: Language }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [buildType, setBuildType] = useState(BUILD_OPTIONS[0])
   const copy = COPY[lang]
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-    `Portfolio inquiry: ${buildType}`,
-  )}`
+  const mailto = buildInquiryMailto(buildType)
 
   return (
-    <section className="mx-auto w-full max-w-[1440px] px-6 py-24 md:px-12">
+    <section id="contact" className="mx-auto w-full max-w-[1440px] px-6 py-24 md:px-12">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         <div className="flex flex-col items-start gap-6">
           <span className="flex items-center gap-2 rounded-full border border-neutral-600 px-4 py-1.5 text-sm text-neutral-300">
@@ -742,7 +783,7 @@ function FaqSection({ lang }: { lang: Language }) {
             href={mailto}
             className="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
           >
-            {copy.cta}
+            {copy.inquiryCta}
             <ArrowUpRight size={16} weight="bold" />
           </a>
         </div>
@@ -789,7 +830,7 @@ function Footer({ lang }: { lang: Language }) {
     href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {}
 
   return (
-    <footer id="contact" className="w-full pt-24">
+    <footer className="w-full pt-24">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center justify-between gap-8 px-6 pb-16 md:flex-row md:px-12">
         <div className="flex gap-4">
           {icons.map(({ label, Icon, href }) => (
@@ -813,7 +854,7 @@ function Footer({ lang }: { lang: Language }) {
           href={`mailto:${CONTACT_EMAIL}`}
           className="flex items-center gap-2 rounded-full border border-white px-6 py-3 text-sm font-medium text-white"
         >
-          {COPY[lang].cta}
+          {COPY[lang].contactCta}
           <ArrowUpRight size={16} weight="bold" />
         </a>
       </div>
